@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全球捐赠指数</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="framework/echarts/esl.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+			$.rank = $('.rank');
+			var oLis = $('#titlebar_ul li');
+			for( var i=0, len = oLis.length; i< len; i++){
+				oLis[i].onclick = function( e ){
+					var id = '#' + this.id + '-content';
+					var els = $('.nav-content');
+					colseOther( $(id), els );
+					$(id).addClass('content-move-left');
+				}
+			}
+
+			var a_close = $('.close');
+			for( var i=0; i<a_close.length; i++){
+				a_close[i].onclick = function( e ){
+					var el = $(this).parent();
+					el.removeClass('content-move-left');
+				}
+			}
+
+			function colseOther( el, els ){
+				for( var i=0; i< els.length; i++){
+					if( $(els[i]) === el ){
+						break;
+					}else{
+						$( els[i]).removeClass('content-move-left');
+					}
+				}
+			}
+
+			//排名弹出事件
+			var	 rank_btn = $('#leftbar_ul li');
+			rank_btn.on('click', function(event) {
+				$('.rank').addClass('rank_content_right');
+			});
+
+			//左侧栏关闭按钮点击事件
+			var rank_close = $('.right');
+			rank_close.on('click', function(event) {
+				$(this).parent().removeClass('rank_content_right');
+				$(this).parent().children('.rank_content').remove('div');
+			});
+
+
+		});
+	</script>
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<div id="titlebar">
+		<ul id= 'btn-group'class="btn-group">
+		  <li class="item btn-default">世界捐助指数</li>
+		  <li class="item btn-default">助陌生人指数</li>
+		  <li class="item btn-default">资金援助指数</li>
+		  <li class="item btn-default">志愿服务指数</li>
+		</ul>
+
+		<ul id='titlebar_ul'>
+			<li id = "brand" class="item">
+				丑闻盘点
+			</li>
+			<li id = "asset" class="item">
+				指数报告
+			</li>
+			<li id = "prof" class="item">
+				指数简介
+			</li>
+		</ul>
+	
+
+		<div class="nav-content" id="prof-content">
+			<a href="#" class='left close'>
+				<div class="icon"></div>
+				<span class="caption">Close</span>
+			</a>
+			<div class='content'>
+				<p>世界捐助指数是由总部设在英国的慈善援助基金会（CAF）于2010年9月首次发布的。该指数是由慈善援助基金会委托盖洛普调查机构对各国家或地区进行抽取年龄为15岁以上的人群进行调查，再根据资金援助、志愿服务和帮助陌生人三项指标给他们的慈善情况排名。这项调查中各国的样本数量与人口成一定比例，在大多数国家选取具有代表性的城市收集1000份问卷。调查方式是通过电话或面对面访谈形式的，这取决于该国的电话覆盖率。捐钱或志愿服务的组织可能包括政党/组织以及注册的慈善团体、社区组织和宗教场所。</p>
+			</div>
+		</div>
+		<div class="nav-content" id="asset-content">
+			<a href="#" class='left close'>
+				<div class="icon"></div>
+				<span class="caption">Close</span>
+			</a>
+			<div class='content'>
+
+				<p>2010年情况根据《世界捐助指数2010》的报告显示，在调查的占世界人口95%的153个国家及地区中，全球五分之一的人自愿帮助别人，三分之一的人向慈善机构捐过款，45%的人都是“厚道人”，表示乐意帮助陌生人。根据每个国家或地区向慈善捐款的数额、为陌生人提供金钱或时间帮助的多少，慈善援助基金会做出了如下排名： 
+				澳大利亚和新西兰以57%的平均分并列第一，得分为56%的加拿大和爱尔兰并列第三，瑞士和美国得分为55%，并列第五。中国香港与德国、丹麦、几内亚并列第18位，韩国排第81，新加坡第91，日本第11。该报告显示，只有4%的立陶宛人捐钱给慈善机构，而马耳他为83%；在土库曼斯坦，有61%的人做志愿者工作，而柬埔寨仅有2%。而好几个世界人口最多的国家则在该指数上排名倒数，包括印度排名134，俄罗斯排名138，中国列147，倒数第7。根据该调查，仅有4%的中国人奉献自己的时间给慈善，而俄罗斯仅有6%的人捐款。</p>
+				<p>
+				</br><a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">更多...</a></br>
+			</p>
+			</div>
+		</div>
+		<div class="nav-content" id="brand-content">
+			<a href="#" class='left close'>
+				<div class="icon"></div>
+				<span class="caption">Close</span>
+			</a>
+			<div class='content'><p>丑闻盘点</p></div>
+		</div>
+	</div>
+	
+	<!-- 左侧栏 -->
+	<div id="leftbar">
+		<ul id='leftbar_ul'>
+			<li>排名</li>
+		</ul>
+		<div class='rank'>
+			<a href="#" class='right close'>
+				<div class="right_icon"></div>
+				<span class="right_caption">Close</span>
+			</a>
+			<div class='rank_content'></div>
+		</div>
+	</div>
+
+	<!-- 右侧栏 -->
+	<div id="rightbar">
+		<ul id='rightbar_ul'>
+			<li>选择国家</li>
+		</ul>
+	</div>
+
+	<!-- 地图显示 -->
+	<div id="right_main">
+		<div id="map" ></div>
+	</div>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+</body>
+</html>
