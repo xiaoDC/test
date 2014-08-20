@@ -226,8 +226,8 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	from{
 	}
 	to{
-		-webkit-transform: translateX(300px);
-		transform: translateX(300px);
+		-webkit-transform: translateX(400px);
+		transform: translateX(400px);
 	}
 }
 
@@ -235,16 +235,16 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	from{
 	}
 	to{
-		-moz-transform:translateX(300px);
-		transform:translateX(300px);
+		-moz-transform:translateX(400px);
+		transform:translateX(400px);
 	}
 }
 @-o-keyframes rcr{
 	from{
 	}
 	to{
-		-o-transform:translateX(300px);
-		transform:translateX(300px);
+		-o-transform:translateX(400px);
+		transform:translateX(400px);
 	}
 }
 
@@ -252,8 +252,8 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	from{
 	}
 	to{
-		-webkit-transform: translateX(300px);
-		transform: translateX(300px);
+		-webkit-transform: translateX(400px);
+		transform: translateX(400px);
 	}
 }
 
@@ -270,23 +270,27 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 
 #leftbar .rank{
 	background-color: #e1e1e1;
-	width:300px;
+	width:400px;
 	height: 100%;
 	position: absolute;
-	left:-299px;	
+	left:-399px;	
 	top:40px;
 }
 
+.rank span#rank_span{
+	height: 40px;line-height: 40px;display: inline-block;margin-left: 100px;font-family: inherit;font-size: 19px;
+}
+
 .rank_content{
-	margin-top:40px;
-	height: 100%;
+	margin-top:0;
+	height: 90%;
 	width: 100%;
 	overflow: auto;
 }
 
 .rank_item{
 	left: 5px;
-	height: 40px;
+	height: 300px;
 	line-height: 20px;
 	width: 100%;
 	font-size: 14px;
@@ -298,9 +302,13 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 
 .rank_item span{
 	display: block;
-	margin: 4px 8px 4px 0;
+	margin: 4px 28px 4px 0;
 	font-size: 16px;
 	font-weight: bold;
+}
+
+.item_line{
+	height: 100%;width: 90%;
 }
 
 

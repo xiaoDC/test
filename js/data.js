@@ -2890,4 +2890,22 @@
 		res.nameMap = _data.nameMap;
         return res;
 	};
+
+	window.getLineData = function( nationName, year_num, category_num ){
+		var data = [];
+		for(var i=0; i<category_num; i++){
+			var years_data= [];
+			for( var j=0; j<year_num; j++){
+				var year_datas = _data.category[i].year[j];
+				for( var p in year_datas){
+					if( year_datas[p].name === nationName){
+						years_data.push( year_datas[p] );
+						break;
+					}
+				}
+			}
+			data.push( years_data );
+		}
+		return data;
+	}
 })( window);
