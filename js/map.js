@@ -4,11 +4,11 @@
     var evironment;
     var myChart;
     var myLineChart;
+    var option;
 	
 	var chart_path = './framework/echarts/echarts';
     var map_path = './framework/echarts/echarts-map';
-    var mapHeight = $('#map')[0].clientHeight;
-    var timelineY = ( mapHeight-80) + 'px';
+    var timelineY = ( $('#map')[0].clientHeight - 80) + 'px';
 
     // 路径配置
     require.config({
@@ -35,14 +35,113 @@
         }
     );
 
+    //初始化line、map等控件
     function init( el, chart_el ){
         chart_el = evironment.init( el ); 
         return chart_el;
     }
 
+    //添加折线图
+    function addLineChart( param){
+        //添加折线图
+        var rank_line = $('.item_line');
+        var rank_item = $(rank_line[rank_line.length-1]);
+
+        var myLineChart = init( rank_item[0], myLineChart );
+        var option_line = {
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['世界捐赠指数','助陌生人指数','资金援助指数','志愿服务指数']
+            },
+           
+            xAxis : [
+                {
+                    type : 'category',
+                    position:'left',
+                    boundaryGap : false,
+                    data : ['2010','2011','2012','2013']
+                }
+            ],
+            yAxis : [
+                {
+                    position:'top',
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'世界捐赠指数',
+                    type:'line',
+                    smooth: true,
+                    symbol: 'emptyCircle',
+                    data:[]
+                },
+                {
+                    name:'助陌生人指数',
+                    type:'line',
+                    smooth: true,
+                    symbol: 'emptyCircle',     // 系列级个性化拐点图形
+                    data:[]
+                },
+                {
+                    name:'资金援助指数',
+                    type:'line',
+                    smooth: true,
+                    symbol: 'emptyCircle',
+                    data:[]                    },
+                {
+                    name:'志愿服务指数',
+                    type:'line',
+                    smooth: true,
+                    symbol:'emptyCircle',
+                    data:[]
+                }
+            ]
+        };
+
+        var line_data = getLineData( param.data.name , 4, 4 );
+        for( var i=0; i<option_line.series.length; i++){
+            option_line.series[i].data = line_data[i];
+        }
+                            
+        myLineChart.setOption( option_line, true );
+    }
+
+    // map添加点击的监听事件
+    function eConsole(param) {
+        //地图上点击，左侧边栏添加折线图
+        console.log( param );
+        var html = '<div class="rank_item"><a href="#" class="rank_item_close"><div class="rank_item_icon"></div></a><span>' + param.data.name +'</span><div class="item_line" id="item_line_'+param.data.name+'"></div></div>';
+        if( ! $.rank.hasClass('rank_content_right') ){
+            $.rank.addClass('rank_content_right');
+        }
+        $.rank.children('.rank_content').append(html);
+        
+        var self = this;
+        //单个item的关闭
+        var rank_items = $('.rank_item_icon');
+        $(rank_items[rank_items.length-1]).on('click', function(event) {
+            //移除地图上的标注
+            var marks = self._option.series[0].markPoint.data;
+            for( var i=0; i<marks.length; i++){
+                if( marks[i].name === param.name ){
+                    marks.splice(i,1);
+                }
+            }
+            option.options[0].series[0].markPoint.data = marks;
+            self.setOption( option, true ); //此处调用self.refresh() 也可以
+            //左侧边栏移除相应点的信息（包括折线图）
+            $(this).parent().parent().remove();
+        });
+
+        addLineChart( param );
+    }
+
     function updateMap(chart_, data_, txt_, year_){
 
-        var option = {
+        option = {
             timeline:{
                 data:[
                     '2010','2011','2012','2013'
@@ -71,10 +170,6 @@
                         }
                     }
                 },
-              
-                // symbolSize:auto,
-                // autoPlay : true,
-                // controlPosition:'left',
                 controlPosition:'none',
                 x:'20%',
                 y:timelineY,
@@ -380,97 +475,14 @@
         }
         
         var ecConfig = require('echarts/config');
-        function eConsole(param) {
-            var html = '<div class="rank_item"><a href="#" class="rank_item_close"><div class="rank_item_icon"></div></a><span>' + param.data.name +'</span><div class="item_line" id="item_line_'+param.data.name+'"></div></div>';
-            if( ! $.rank.hasClass('rank_content_right') ){
-                $.rank.addClass('rank_content_right');
-            }
-            $.rank.children('.rank_content').append(html);
-         
-            //单个item的关闭
-            var rank_items = $('.rank_item_icon');
-            $(rank_items[rank_items.length-1]).on('click', function(event) {
-                $(this).parent().parent().remove();
-            });
-
-            // option.options[0].series[0].markPoint.data.
-            //添加折线图
-            var rank_line = $('.item_line');
-            var rank_item = $(rank_line[rank_line.length-1]);
-
-
-
-            var myLineChart = init( rank_item[0], myLineChart );
-            var option_line = {
-                tooltip : {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data:['世界捐赠指数','助陌生人指数','资金援助指数','志愿服务指数']
-                },
-               
-                xAxis : [
-                    {
-                        type : 'category',
-                        position:'left',
-                        boundaryGap : false,
-                        data : ['2010','2011','2012','2013']
-                    }
-                ],
-                yAxis : [
-                    {
-                        position:'top',
-                        type : 'value'
-                    }
-                ],
-                series : [
-                    {
-                        name:'世界捐赠指数',
-                        type:'line',
-                        smooth: true,
-                        symbol: 'emptyCircle',
-                        data:[]
-                    },
-                    {
-                        name:'助陌生人指数',
-                        type:'line',
-                        smooth: true,
-                        symbol: 'emptyCircle',     // 系列级个性化拐点图形
-                        data:[]
-                    },
-                    {
-                        name:'资金援助指数',
-                        type:'line',
-                        smooth: true,
-                        symbol: 'emptyCircle',
-                        data:[]                    },
-                    {
-                        name:'志愿服务指数',
-                        type:'line',
-                        smooth: true,
-                        symbol:'emptyCircle',
-                        data:[]
-                    }
-                ]
-            };
-
-             var line_data = getLineData( param.data.name , 4, 4 );
-            for( var i=0; i<option_line.series.length; i++){
-                option_line.series[i].data = line_data[i];
-            }
-                                
-            myLineChart.setOption( option_line, true );
-        }
       
         // 为 map 上每个国家添加点击事件
         chart_.on(ecConfig.EVENT.CLICK, eConsole);
         chart_.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
-            console.log( this );
-            console.log( param );
             var obj = {};
             obj['name'] = param.target;
+            //控制重复点击
             if( param.selected[param.target] == true){
-                // option.options[0].series[0].markPoint.data.obj
                 option.options[0].series[0].markPoint.data.push( obj );
             }else{
                 option.options[0].series[0].markPoint.data.push( obj );
@@ -485,6 +497,7 @@
     }
 
 
+    //指数类别切换按钮事件
     var btns = $('.btn-default');
     for( var i=0; i<btns.length; i++ ){
         btns[i].onclick = function(){
