@@ -5,6 +5,7 @@
     var myChart;
     var myLineChart;
     var option;
+    var nationSelected = window.getSelectedData();
 	
 	var chart_path = './framework/echarts/echarts';
     var map_path = './framework/echarts/echarts-map';
@@ -14,7 +15,16 @@
     require.config({
         paths:{ 
             echarts:chart_path,
-            'echarts/chart/bar': chart_path, 'echarts/chart/pie': chart_path, 'echarts/chart/line': chart_path, 'echarts/chart/k': chart_path, 'echarts/chart/scatter': chart_path, 'echarts/chart/radar': chart_path, 'echarts/chart/chord': chart_path, 'echarts/chart/force': chart_path, 'echarts/chart/map': map_path, 'echarts/chart/config':'./framework/echarts/config',
+            'echarts/chart/bar': chart_path, 
+            'echarts/chart/pie': chart_path, 
+            'echarts/chart/line': chart_path, 
+            'echarts/chart/k': chart_path, 
+            'echarts/chart/scatter': chart_path, 
+            'echarts/chart/radar': chart_path, 
+            'echarts/chart/chord': chart_path, 
+            'echarts/chart/force': chart_path, 
+            'echarts/chart/map': map_path, 
+            'echarts/chart/config':'./framework/echarts/config'
         } 
     });
 
@@ -29,6 +39,35 @@
             // 基于准备好的dom，初始化echarts图表
             evironment = ec;
             myChart = init( $('#map')[0], myChart );
+
+            var ecConfig = require('echarts/config');
+            // 为 map 上每个国家添加点击事件
+            myChart.on(ecConfig.EVENT.CLICK, eConsole);
+
+            myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
+                var _name = param.target;
+                var obj = {};
+                obj['name'] = _name;
+                //控制重复点击
+                if( nationSelected[_name] ){   //点击过,则移除标注
+                    //移除地图上的标注
+                    var marks = this._option.series[0].markPoint.data;
+                    for( var i=0; i<marks.length; i++){
+                        if( marks[i].name === _name ){
+                            marks.splice(i,1);
+                        }
+                    }
+                    option.options[0].series[0].markPoint.data = marks;
+                    myChart.setOption( option, true ); //此处调用_this.refresh() 也可以
+                }else{   //未点击，添加标注
+                    option.options[0].series[0].markPoint.data.push( obj );
+                    myChart.setOption( option,true );
+                }
+            
+            });
+
+            
+
             var txt = $('.btn-default')[index].innerHTML;
             //初始的数据是当前年份的
             updateMap( myChart , _data, txt );
@@ -112,31 +151,46 @@
     // map添加点击的监听事件
     function eConsole(param) {
         //地图上点击，左侧边栏添加折线图
-        console.log( param );
-        var html = '<div class="rank_item"><a href="#" class="rank_item_close"><div class="rank_item_icon"></div></a><span>' + param.data.name +'</span><div class="item_line" id="item_line_'+param.data.name+'"></div></div>';
-        if( ! $.rank.hasClass('rank_content_right') ){
-            $.rank.addClass('rank_content_right');
-        }
-        $.rank.children('.rank_content').append(html);
-        
-        var self = this;
-        //单个item的关闭
-        var rank_items = $('.rank_item_icon');
-        $(rank_items[rank_items.length-1]).on('click', function(event) {
-            //移除地图上的标注
-            var marks = self._option.series[0].markPoint.data;
-            for( var i=0; i<marks.length; i++){
-                if( marks[i].name === param.name ){
-                    marks.splice(i,1);
-                }
-            }
-            option.options[0].series[0].markPoint.data = marks;
-            self.setOption( option, true ); //此处调用self.refresh() 也可以
-            //左侧边栏移除相应点的信息（包括折线图）
-            $(this).parent().parent().remove();
-        });
+        this.restore();
+        // this.setOption( option, true);
 
-        addLineChart( param );
+        var _name_ = param.data.name;
+        var regS = new RegExp(" ","g");
+        _name_ =  _name_.replace( regS, '_');
+
+        if(  !nationSelected[ param.name ] ){ //添加折线图
+            nationSelected[ param.name ] = true;
+        
+            var html = '<div class="rank_item"><a href="#" class="rank_item_close"><div class="rank_item_icon"></div></a><span>' + param.data.name +' ' + param.name +'</span><div class="item_line" id="item_line_'+_name_+'"></div></div>';
+            if( ! $.rank.hasClass('rank_content_right') ){
+                $.rank.addClass('rank_content_right');
+            }
+            $.rank.children('.rank_content').append(html);
+            
+            var _this = this;
+            //单个item的关闭
+            var rank_items = $('.rank_item_icon');
+            $(rank_items[rank_items.length-1]).on('click', function(event) {
+                //移除地图上的标注
+                var marks = _this._option.series[0].markPoint.data;
+                for( var i=0; i<marks.length; i++){
+                    if( marks[i].name === param.name ){
+                        marks.splice(i,1);
+                    }
+                }
+                option.options[0].series[0].markPoint.data = marks;
+                _this.setOption( option, true ); //此处调用_this.refresh() 也可以
+                //左侧边栏移除相应点的信息（包括折线图）
+                $(this).parent().parent().remove();
+            });
+
+            addLineChart( param );
+        }else{ // 已存在，删除折线图
+            nationSelected[ param.name ] = false;
+            var $link_chart = $('#item_line_' + _name_ );
+            $link_chart.parent().remove();
+        }
+        
     }
 
     function updateMap(chart_, data_, txt_, year_){
@@ -238,7 +292,7 @@
                             selectedMode : 'multiple',
                             itemStyle:{
                                 normal:{label:{show:false}},
-                                emphasis:{label:{show:true}}
+                                emphasis:{label:{show:true}, color:'rgba(255,222,222, .3)'}
                             },
                             'data':data_.data.year[0],
                             'nameMap' : data_.nameMap,
@@ -264,7 +318,7 @@
                                 '贝宁':[2.37,6.29],
                                 '布基纳法索':[-1.31,12.22],
                                 '孟加拉国':[90.2425,23.4236],
-                                '':[23.19,42.41],
+                                '没有名字':[23.19,42.41],
                                 '巴哈马':[-77.2021,25.358],
                                 '波斯尼亚和黑塞哥维那':[18.26,43.52],
                                 '白俄罗斯':[53.5,27.3],
@@ -460,7 +514,7 @@
             var year = new Date().getFullYear()-1;
             var years = option.timeline.data;
             for( var i=0; i<years.length; i++ ){
-                if( years[i] === (year+'') ){
+                if( years[i] === ( ''+year) ){
                     option.timeline.currentIndex = i;
                     break;
                 }
@@ -474,24 +528,6 @@
             option.options[i].title.text += ('年'+txt_ );
         }
         
-        var ecConfig = require('echarts/config');
-      
-        // 为 map 上每个国家添加点击事件
-        chart_.on(ecConfig.EVENT.CLICK, eConsole);
-        chart_.on(ecConfig.EVENT.MAP_SELECTED, function (param) {
-            var obj = {};
-            obj['name'] = param.target;
-            //控制重复点击
-            if( param.selected[param.target] == true){
-                option.options[0].series[0].markPoint.data.push( obj );
-            }else{
-                option.options[0].series[0].markPoint.data.push( obj );
-            }
-        
-            chart_.setOption( option,true );
-            // chart_.addMarkPoint(0, markpoint);
-        });
-
         // 为echarts对象加载数据 
         chart_.setOption(option, true); 
     }
@@ -511,4 +547,14 @@
             updateMap( myChart, _data, txt, index_ );
         }
     }
+
+     //左侧栏关闭按钮点击事件
+    var rank_close = $('.right');
+    rank_close.on('click', function(event) {
+        $(this).parent().removeClass('rank_content_right');
+        $(this).parent().children('.rank_content').children().remove();
+        option.options[0].series[0].markPoint.data = [];
+        myChart.clear();
+        myChart.setOption( option, true );
+    });
 })(jQuery);

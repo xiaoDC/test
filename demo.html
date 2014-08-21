@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript">
 		$('document').ready(function(){
+			
 			$.rank = $('.rank');
 			var oLis = $('#titlebar_ul li');
 			for( var i=0, len = oLis.length; i< len; i++){
@@ -42,14 +43,6 @@
 			rank_btn.on('click', function(event) {
 				$('.rank').addClass('rank_content_right');
 			});
-
-			//左侧栏关闭按钮点击事件
-			var rank_close = $('.right');
-			rank_close.on('click', function(event) {
-				$(this).parent().removeClass('rank_content_right');
-				$(this).parent().children('.rank_content').remove('div');
-			});
-
 
 		});
 	</script>
