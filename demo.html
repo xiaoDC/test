@@ -1,31 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--[if IE 6 ]><html class="ie ielt9 ielt8 ielt7 ie6" lang="en-US"><![endif]-->
-<!--[if IE 7 ]><html class="ie ielt9 ielt8 ie7" lang="en-US"><![endif]-->
-<!--[if IE 8 ]><html class="ie ielt9 ie8" lang="en-US"><![endif]-->
 <head>
 	<meta charset="UTF-8">
 	<title>全球捐赠指数</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<!--[if lt IE 10]> 
-	<script type="text/javascript" src="js/PIE.js"></script> 
-	<![endif]--> 
-	<!--[if IE 7]>
-	<script type='text/javascript' src='js/excanvas.js'></script>
-	<link rel="stylesheet" href="css/iefix.css" type="text/css" media="screen" />
-	<![endif]-->
-	<!--[if IE 8]>
-	<script type='text/javascript' src='js/excanvas.js'></script>
-	<link rel="stylesheet" href="css/iefix.css" type="text/css" media="screen" />
-	<![endif]--> 
 	<script src="framework/echarts/esl.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+			$.rank = $('.rank');
+			var oLis = $('#titlebar_ul li');
+			for( var i=0, len = oLis.length; i< len; i++){
+				oLis[i].onclick = function( e ){
+					var id = '#' + this.id + '-content';
+					var els = $('.nav-content');
+					colseOther( $(id), els );
+					$(id).animate({right:"0px"});
+					$(id).show();
+				}
+			}
+
+			var a_left_close = $('.right.close');
+			for( var i=0; i<a_left_close.length; i++){
+				a_left_close[i].onclick = function( e ){
+					var el = $(this).parent();
+					// el.removeClass('content-move-left');
+					el.animate({
+						left:'-400px'
+					});
+				}
+			}
+
+			var a_close = $('.left.close');
+			for( var i=0; i<a_close.length; i++){
+				a_close[i].onclick = function( e ){
+					var el = $(this).parent();
+					// el.removeClass('content-move-left');
+					el.animate({
+						right:'-400px'
+					});
+				}
+			}
+
+			function colseOther( el, els ){
+				for( var i=0; i< els.length; i++){
+					if( $(els[i]) === el ){
+						break;
+					}else{
+						// $( els[i]).removeClass('content-move-left');
+						$( els[i] ).animate({right:"-400px"}, 100);
+						$( els[i] ).hide();
+					}
+				}
+			}
+
+			//排名弹出事件
+			var	 rank_btn = $('#leftbar_ul li');
+			rank_btn.on('click', function(event) {
+				$(".rank").animate({left:'0px'});
+			});
+
+		});
+	</script>
 </head>
 <body>
 	<!-- 顶部导航栏 -->
 	<div id="titlebar">
-		<ul id= 'btn-group' class="btn-group">
+		<ul id= 'btn-group'class="btn-group">
 		  <li class="item btn-default">世界捐助指数</li>
 		  <li class="item btn-default">助陌生人指数</li>
 		  <li class="item btn-default">资金援助指数</li>
@@ -64,11 +105,12 @@
 				<p>2010年情况根据《世界捐助指数2010》的报告显示，在调查的占世界人口95%的153个国家及地区中，全球五分之一的人自愿帮助别人，三分之一的人向慈善机构捐过款，45%的人都是“厚道人”，表示乐意帮助陌生人。根据每个国家或地区向慈善捐款的数额、为陌生人提供金钱或时间帮助的多少，慈善援助基金会做出了如下排名： 
 				澳大利亚和新西兰以57%的平均分并列第一，得分为56%的加拿大和爱尔兰并列第三，瑞士和美国得分为55%，并列第五。中国香港与德国、丹麦、几内亚并列第18位，韩国排第81，新加坡第91，日本第11。该报告显示，只有4%的立陶宛人捐钱给慈善机构，而马耳他为83%；在土库曼斯坦，有61%的人做志愿者工作，而柬埔寨仅有2%。而好几个世界人口最多的国家则在该指数上排名倒数，包括印度排名134，俄罗斯排名138，中国列147，倒数第7。根据该调查，仅有4%的中国人奉献自己的时间给慈善，而俄罗斯仅有6%的人捐款。</p>
 				<p>
-				<br /><a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a><br />
-				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a><br />
-				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a><br />
-				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a><br />
-				<a href="http://www.hao123.com/?tn=91949028_hao_pg">更多...</a><br />
+				</br><a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">慷慨程度与一个国家或地区的综合福利关系紧密</a></br>
+
+				<a href="http://www.hao123.com/?tn=91949028_hao_pg">更多...</a></br>
 			</p>
 			</div>
 		</div>
@@ -86,7 +128,7 @@
 		<ul id='leftbar_ul'>
 			<li>排名</li>
 		</ul>
-		<div class='rank'>
+		<div class='rank' >
 			<span id="rank_span">国家历年排名</span>
 			<a href="#" class='right close'>
 				<div class="right_icon"></div>
@@ -107,55 +149,7 @@
 	<div id="right_main">
 		<div id="map" ></div>
 	</div>
-</body>
-<script type="text/javascript">
-	$(function() { 
-		if (window.PIE) { 
-			$('.rounded').each(function() { 
-				PIE.attach(this); 
-			}); 
-		} 
-	}); 
-
-	$('document').ready(function(){
-		
-		$.rank = $('.rank');
-		var oLis = $('#titlebar_ul li');
-		for( var i=0, len = oLis.length; i< len; i++){
-			oLis[i].onclick = function( e ){
-				var id = '#' + this.id + '-content';
-				var els = $('.nav-content');
-				colseOther( $(id), els );
-				$(id).addClass('content-move-left');
-			}
-		}
-
-		var a_close = $('.close');
-		for( var i=0; i<a_close.length; i++){
-			a_close[i].onclick = function( e ){
-				var el = $(this).parent();
-				el.removeClass('content-move-left');
-			}
-		}
-
-		function colseOther( el, els ){
-			for( var i=0; i< els.length; i++){
-				if( $(els[i]) === el ){
-					break;
-				}else{
-					$( els[i]).removeClass('content-move-left');
-				}
-			}
-		}
-
-		//排名弹出事件
-		var	 rank_btn = $('#leftbar_ul li');
-		rank_btn.on('click', function(event) {
-			$('.rank').addClass('rank_content_right');
-		});
-
-	});
-</script>
 <script type="text/javascript" src="js/data.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
+</body>
 </html>

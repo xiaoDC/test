@@ -42,7 +42,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	width:400px;
 	position:absolute;
 	z-index: 99;
-	opacity: 0;
+	/*opacity: 1;*/
 	display: none;
 }
 
@@ -73,9 +73,9 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 
 .right_caption{
 	position: absolute; display: inline-block;
-	opacity: 0; right: 7px; top: 5px;
+	opacity: 0; right: 27px; top: 5px;
 	font-weight: normal; font-size: 14px;
-	color: #fff;
+	color: #E1E1E1;
 }
 
 .close:hover  .right_caption{
@@ -110,9 +110,10 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 
 .caption{
 	position: absolute; display: inline-block;
-	opacity: 0; left: 7px; top: 5px;
+	/*opacity: 0; */
+	left: 27px; top: 5px;
 	font-weight: normal; font-size: 14px;
-	color: #fff;
+	color: #E1E1E1;
 }
 
 
@@ -132,7 +133,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	clear: both;
 	position: absolute; top:26px;
 	width: 100%;
-	padding: 12px 8px 22px;
+	padding: 12px 0px 22px;
 	background-color: #e1e1e1;
 	/*overflow: auto;*/
 }
@@ -204,7 +205,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 
 .rank_content_right{
 	display: block;
-	-webkit-animation-name: rcr;
+	/*-webkit-animation-name: rcr;
 	-moz-animation-name: rcr;
 	-o-animation-name: rcr;
 	animation-name: rcr;
@@ -219,10 +220,10 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	-webkit-animation-fill-mode: forwards;
 	-moz-animation-fill-mode: forwards;
 	-o-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
+	animation-fill-mode: forwards;*/
 }
 
-@-webkit-keyframes rcr{
+@-webkit-keyframes crc{
 	from{
 	}
 	to{
@@ -231,7 +232,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	}
 }
 
-@-moz-keyframes rcr{
+@-moz-keyframes crc{
 	from{
 	}
 	to{
@@ -239,7 +240,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 		transform:translateX(400px);
 	}
 }
-@-o-keyframes rcr{
+@-o-keyframes crc{
 	from{
 	}
 	to{
@@ -248,7 +249,7 @@ body{ margin: 0; padding: 0; overflow: hidden;}
 	}
 }
 
-@keyframes rcr{
+@keyframes crc{
 	from{
 	}
 	to{
