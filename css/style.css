@@ -5,6 +5,13 @@ ul{
 
 body{ margin: 0; padding: 0; overflow: hidden;}
 
+p{
+	text-indent: 2em;
+    line-height: 28px;
+    font-size: 13px;
+    font-family: inherit;
+	margin: 0 6px;
+}
 
 /* titlebar 的样式*/
 #titlebar{
