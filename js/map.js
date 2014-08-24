@@ -164,6 +164,9 @@
             var html = '<div class="rank_item"><a href="#" class="rank_item_close"><div class="rank_item_icon"></div></a><span>' + param.data.name +' ' + param.name +'</span><div class="item_line" id="item_line_'+_name_+'"></div></div>';
             if( ! $.rank.hasClass('rank_content_right') ){
                 $.rank.addClass('rank_content_right');
+                $.rank.animate({
+                    left:'0px'
+                }, 1000);
             }
             $.rank.children('.rank_content').append(html);
             
