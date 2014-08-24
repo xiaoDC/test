@@ -140,7 +140,7 @@
             ]
         };
 
-        var line_data = getLineData( param.data.name , 4, 4 );
+        var line_data = getLineData( param.data.name , option_line.xAxis[0].data.length, option_line.series.length );
         for( var i=0; i<option_line.series.length; i++){
             option_line.series[i].data = line_data[i];
         }
