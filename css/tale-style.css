@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+.body-style {
+	background-color:#FAFAFA;
+	margin: 0;
+}
+.maindiv{
+	width:900px;
+	margin:0 auto;
+	position:relative;
+	float:none;
+	padding:0;
+	text-align:justify;
+	margin-bottom:80px;
+}
+.p-font {
+	text-indent: 2em;
+	color: #515151;
+	font: normal normal 16px/30px "微软雅黑";
+	margin-top: 20px;
+}
+	
+.head-style {
+	background:#D5D5D5;
+	height: 40px;
+	line-height: 34px;
+	position: relative;
+	color: #fff;
+}
+.p-bold {
+	font-weight:bold;
+}
